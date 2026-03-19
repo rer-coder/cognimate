@@ -1,145 +1,244 @@
-# CogniMate 智伴 - 文档说明
+# CogniMate 智伴
 
-## 📁 文件夹结构
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.9+-blue.svg" alt="Python">
+  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
+  <img src="https://img.shields.io/badge/FastAPI-0.104+-orange.svg" alt="FastAPI">
+</p>
 
-```
-workspace-cognimate/
-├── public/          # ✅ 可上传到GitHub的公开文档
-├── private/         # ⚠️ 包含个人隐私，不上传GitHub
-├── server/          # 服务器代码
-├── memory/          # 记忆文件
-└── .gitignore       # Git忽略配置
-```
-
----
-
-## 📂 public/ 文件夹（公开）
-
-**用途**：脱敏后的通用版本，可安全上传到GitHub
-
-**包含**：
-- `1_项目说明书_公开版.md` - 不含真实用户数据的项目说明书
-- `2_海报设计方案_公开版.md` - 通用海报设计
-- `3_视频拍摄脚本_公开版.md` - 脱敏后的视频脚本
-- `4_集团好报方案_公开版.md` - 通用好报方案
-- `5_项目介绍与答辩要点_公开版.md` - 通用答辩要点
-
-**使用场景**：
-- GitHub开源展示
-- 分享给其他人参考
-- 比赛提交（通用版本）
+<p align="center">
+  <strong>你的专属 AI 伙伴 — 懂你、陪你、成就你</strong>
+</p>
 
 ---
 
-## 📂 private/ 文件夹（私密）
+## 📖 简介
 
-**用途**：包含个人隐私的专属版本，**不上传到GitHub**
+CogniMate 智伴是一款**本地化部署**的个人 AI 协作者，帮助你：
 
-**包含**：
-- `1_项目说明书_私密版.md` - 包含骷髅王的个人信息
-- （其他私密版本文档）
+- 📅 管理日程，准时提醒重要事项
+- 💧 养成健康习惯（喝水、运动、睡眠）
+- 🎯 设定目标，跟踪进度，达成成就
+- ❤️ 提供情感支持和陪伴
 
-**私密信息包括**：
-- 用户昵称：骷髅王
-- 飞书用户ID：ou_e2516ce99ba67e7c21320bbc96270d17
-- 身高体重数据：168cm，138斤→130斤
-- 个人减重目标
+### ✨ 核心特点
 
-**使用场景**：
-- 个人使用
-- 本地备份
-- 不对外分享
-
----
-
-## 🔒 隐私保护
-
-### .gitignore 配置
-已配置 `.gitignore` 文件，以下内容**不会**被Git追踪：
-- `private/` 文件夹
-- 所有 `*_私密版.md` 文件
-- 数据库文件（*.db）
-- 日志文件（*.log）
-
-### 上传GitHub前检查
-
-运行以下命令检查哪些文件会被上传：
-
-```bash
-git status
-```
-
-确保不会出现：
-- ❌ private/
-- ❌ *_私密版.md
-- ❌ *.db
+| 特性 | 说明 |
+|------|------|
+| 🔒 **隐私安全** | 数据本地存储，不上传云端 |
+| ⏰ **准时可靠** | ±30秒精准提醒，多重备用保障 |
+| 💝 **情感陪伴** | 识别情绪，温暖回应 |
+| 🤖 **多模态** | 支持飞书、Web 等多种交互方式 |
 
 ---
 
 ## 🚀 快速开始
 
-### 上传到GitHub
+### 1. 克隆项目
 
 ```bash
-# 1. 初始化Git（如果还没做）
-git init
-
-# 2. 添加公开文件
-git add public/
-git add server/
-git add README.md
-git add .gitignore
-
-# 3. 提交
-git commit -m "上传CogniMate公开版本"
-
-# 4. 推送到GitHub
-git push origin main
+git clone https://github.com/rer-coder/cognimate.git
+cd cognimate
 ```
 
-### 本地私密文件备份
+### 2. 创建虚拟环境
 
 ```bash
-# 压缩私密文件夹备份
-tar -czvf cognimate_private_$(date +%Y%m%d).tar.gz private/
+python -m venv venv
 
-# 保存到安全位置（如本地硬盘、加密U盘）
+# Linux/Mac
+source venv/bin/activate
+
+# Windows
+venv\Scripts\activate
+```
+
+### 3. 安装依赖
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. 配置环境变量
+
+```bash
+# 复制模板文件
+cp .env.example .env
+
+# 编辑 .env 文件，填入你的配置
+nano .env  # 或使用你喜欢的编辑器
+```
+
+**必填配置：**
+```env
+FEISHU_APP_ID=cli_xxxxxxxxxxxxxxxx
+FEISHU_APP_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+FEISHU_USER_ID=ou_xxxxxxxxxxxxxxxx
+KIMI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+> 📖 **配置详细说明**见 [CONFIG.md](docs/CONFIG.md)
+
+### 5. 启动服务
+
+```bash
+# 方式1：直接启动
+python server/main.py
+
+# 方式2：使用启动脚本
+cd server && ./start.sh
+
+# 方式3：使用 uvicorn
+uvicorn server.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+服务启动后，访问 http://localhost:8000/docs 查看 API 文档。
+
+---
+
+## 📁 项目结构
+
+```
+cognimate/
+├── server/                    # 后端服务
+│   ├── main.py               # FastAPI 主服务入口
+│   ├── feishu_messenger.py   # 飞书消息推送
+│   ├── checkin_tracker.py    # 打卡系统
+│   ├── goal_tracker.py       # 目标管理
+│   ├── decision_helper.py    # 决策辅助
+│   └── ...
+├── smart_schedule/           # 智能日程模块
+│   ├── api/                  # API 接口
+│   ├── core/                 # 核心逻辑
+│   └── database/             # 数据库
+├── cognimate-agent-skill/    # Agent 技能扩展
+├── docs/                     # 文档
+├── .env.example              # 环境变量模板
+├── config.example.json       # JSON 配置模板
+├── requirements.txt          # 依赖列表
+└── README.md                 # 本文件
 ```
 
 ---
 
-## 📋 文档清单
+## ⚙️ 配置说明
 
-### 公开版（public/）
-| 文档 | 内容 | 大小 |
-|------|------|------|
-| 1_项目说明书_公开版.md | 10页项目说明书（脱敏） | ~3KB |
-| 2_海报设计方案_公开版.md | 海报设计规范 | ~1.5KB |
-| 3_视频拍摄脚本_公开版.md | 3分钟视频脚本 | ~1KB |
-| 4_集团好报方案_公开版.md | 好报发布方案 | ~1KB |
-| 5_项目介绍与答辩要点_公开版.md | 快速参考 | ~1KB |
+### 飞书机器人配置
 
-### 私密版（private/）
-| 文档 | 内容 | 大小 |
-|------|------|------|
-| 1_项目说明书_私密版.md | 完整版（含个人信息） | ~3KB |
+1. 访问 [飞书开放平台](https://open.feishu.cn/app)
+2. 创建「企业自建应用」
+3. 获取 `App ID` 和 `App Secret`
+4. 配置权限：
+   - `im:chat:readonly`
+   - `im:message:send`
+   - `im:message.group_msg`
+5. 发布应用并获取用户授权
 
----
+### AI 服务配置
 
-## ⚠️ 重要提醒
+支持多种 AI 服务：
 
-1. **永远不要**将 `private/` 文件夹上传到GitHub
-2. **永远不要**在公开文档中包含真实用户ID
-3. **定期检查** `git status` 确保没有误添加私密文件
-4. **备份私密文件**到本地安全位置
+**Kimi（推荐）：**
+```env
+KIMI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
 
----
-
-## 📞 联系
-
-如有问题，请联系项目维护者。
+**OpenAI 兼容：**
+```env
+AI_PROVIDER=openai
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+OPENAI_BASE_URL=https://api.openai.com/v1
+```
 
 ---
 
-**最后更新**：2026-03-19  
-**版本**：v1.0
+## 🎯 功能使用
+
+### 设置提醒
+
+通过飞书向 CogniMate 发送消息：
+
+```
+设置每天早上8点提醒我吃早饭
+```
+
+### 打卡
+
+收到提醒后回复：
+
+```
+吃了
+```
+
+或
+
+```
+打卡完成
+```
+
+### 设定目标
+
+```
+我想减肥，目标3个月减10斤
+```
+
+CogniMate 会帮你制定计划并跟踪进度。
+
+---
+
+## 📚 文档
+
+- [安装指南](docs/INSTALL.md) - 详细安装步骤
+- [配置说明](docs/CONFIG.md) - 完整配置选项
+- [API 文档](docs/API.md) - 接口文档
+- [开发指南](docs/DEVELOPMENT.md) - 二次开发说明
+- [部署指南](docs/DEPLOY.md) - 生产环境部署
+
+---
+
+## 🏗️ 技术栈
+
+- **后端**：FastAPI + Uvicorn
+- **数据库**：SQLite
+- **AI**：Kimi / OpenAI 兼容 API
+- **消息**：飞书开放平台
+- **任务调度**：APScheduler / Cron
+
+---
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+1. Fork 本仓库
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 创建 Pull Request
+
+---
+
+## 📜 开源协议
+
+本项目采用 [MIT License](LICENSE) 开源协议。
+
+---
+
+## 🙏 致谢
+
+- [Kimi AI](https://kimi.moonshot.cn/) - AI 能力支持
+- [FastAPI](https://fastapi.tiangolo.com/) - Web 框架
+- [Feishu Open Platform](https://open.feishu.cn/) - 飞书开放平台
+
+---
+
+## 📮 联系我们
+
+- 项目主页：https://github.com/rer-coder/cognimate
+- 问题反馈：https://github.com/rer-coder/cognimate/issues
+
+---
+
+<p align="center">
+  Made with ❤️ by CogniMate Team
+</p>

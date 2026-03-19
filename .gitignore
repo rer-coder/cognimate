@@ -1,45 +1,74 @@
-# CogniMate 私密文件保护
-# 这些文件包含个人隐私信息，请勿上传到GitHub
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# 私密文件夹
-private/
+# 虚拟环境
+venv/
+ENV/
+env/
+.venv
 
-# 包含个人隐私的原始文件
-*_私密版.md
-
-# 用户ID和敏感信息
-*_user_*.md
-
-# 本地配置文件（可能包含密钥）
-*.env
+# 环境变量（包含敏感信息）
+.env
 .env.local
 .env.*.local
 
-# 数据库文件（包含个人数据）
+# 数据库（用户数据）
 *.db
 *.sqlite
 *.sqlite3
+cognimate.db
 
-# 日志文件（可能包含敏感信息）
+# 日志文件
 *.log
 logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db
 
 # 临时文件
 tmp/
 temp/
 *.tmp
 
-# 系统文件
-.DS_Store
-Thumbs.db
+# 用户数据目录
+data/
+memory/*.md
+!memory/.gitkeep
 
-# IDE配置（可选）
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# 依赖（如果本地安装）
-node_modules/
-__pycache__/
-*.pyc
+# 比赛材料（可选，如需公开可删除此项）
+*项目说明书*
+*海报设计*
+*视频脚本*
+*比赛材料*
+*完善总结报告*
+*集团好报*
+*答辩要点*
+*游泳学习*
+*.db
