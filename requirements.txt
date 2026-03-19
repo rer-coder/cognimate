@@ -1,0 +1,22 @@
+# 依赖列表
+# 安装: pip install -r requirements.txt
+
+# Web 框架
+fastapi>=0.104.0
+uvicorn>=0.24.0
+
+# HTTP 请求
+requests>=2.31.0
+
+# 数据库
+sqlite3-python
+
+# 日期时间处理
+python-dateutil>=2.8.0
+
+# 环境变量
+python-dotenv>=1.0.0
+
+# 其他工具
+pydantic>=2.0.0
+python-multipart>=0.0.6

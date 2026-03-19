@@ -1,0 +1,17 @@
+# CogniMate 智能日程管理系统 - 依赖
+
+# FastAPI
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+pydantic>=2.0.0
+
+# 数据库
+# SQLite 是标准库，无需额外安装
+
+# 工具
+python-dateutil>=2.8.0
+
+# 测试
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+httpx>=0.24.0

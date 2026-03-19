@@ -1,0 +1,9 @@
+# CogniMate Agent Skill 依赖
+# 核心模块零依赖，仅服务器端需要以下包
+
+# Web 框架（用于 API 服务）
+fastapi>=0.68.0
+uvicorn>=0.15.0
+
+# 可选：如需使用 SQLite 高级功能
+# sqlite3  # Python 标准库，无需安装
