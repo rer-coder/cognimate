@@ -3,7 +3,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.9+-blue.svg" alt="Python">
   <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
-  <img src="https://img.shields.io/badge/Status-Beta-yellow.svg" alt="Status">
+  <img src="https://img.shields.io/badge/FastAPI-0.104+-orange.svg" alt="FastAPI">
 </p>
 
 <p align="center">
@@ -14,86 +14,195 @@
 
 ## 📖 简介
 
-CogniMate 智伴是一款运行在本地设备上的个人 AI 协作者，帮助用户高效管理日程、养成健康习惯、达成个人目标。
+CogniMate 智伴是一款**本地化部署**的个人 AI 协作者，帮助你：
 
-### 核心特点
+- 📅 管理日程，准时提醒重要事项
+- 💧 养成健康习惯（喝水、运动、睡眠）
+- 🎯 设定目标，跟踪进度，达成成就
+- ❤️ 提供情感支持和陪伴
 
-- 🔒 **本地部署** - 所有数据存储在本地，零隐私风险
-- ⏰ **准时可靠** - ±30秒精准提醒，准时率 95%+
-- 💝 **情感陪伴** - 识别情绪，温暖回应
-- 🧠 **长期记忆** - 记住你的偏好，越用越懂你
+### ✨ 核心特点
 
----
-
-## ✨ 功能特性
-
-- 📅 **智能日程管理** - 日程提醒、动态调整
-- 💧 **健康习惯打卡** - 喝水、运动、睡眠追踪
-- 🎯 **目标管理** - 目标设定、进度跟踪、成就庆祝
-- ❤️ **情感支持** - 情绪识别、主动关怀
-- 🤖 **多模态交互** - 飞书机器人、Web 界面
+| 特性 | 说明 |
+|------|------|
+| 🔒 **隐私安全** | 数据本地存储，不上传云端 |
+| ⏰ **准时可靠** | ±30秒精准提醒，多重备用保障 |
+| 💝 **情感陪伴** | 识别情绪，温暖回应 |
+| 🤖 **多模态** | 支持飞书、Web 等多种交互方式 |
 
 ---
 
 ## 🚀 快速开始
 
-### 环境要求
-
-- Python 3.9+
-- SQLite 3
-- 飞书企业账号（用于消息推送）
-
-### 安装步骤
+### 1. 克隆项目
 
 ```bash
-# 1. 克隆仓库
 git clone https://github.com/rer-coder/cognimate.git
 cd cognimate
+```
 
-# 2. 创建虚拟环境
+### 2. 创建虚拟环境
+
+```bash
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# 或 venv\Scripts\activate  # Windows
 
-# 3. 安装依赖
+# Linux/Mac
+source venv/bin/activate
+
+# Windows
+venv\Scripts\activate
+```
+
+### 3. 安装依赖
+
+```bash
 pip install -r requirements.txt
+```
 
-# 4. 配置环境变量
-export FEISHU_APP_ID="your_app_id"
-export FEISHU_APP_SECRET="your_app_secret"
+### 4. 配置环境变量
 
-# 5. 启动服务
+```bash
+# 复制模板文件
+cp .env.example .env
+
+# 编辑 .env 文件，填入你的配置
+nano .env  # 或使用你喜欢的编辑器
+```
+
+**必填配置：**
+```env
+FEISHU_APP_ID=cli_xxxxxxxxxxxxxxxx
+FEISHU_APP_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+FEISHU_USER_ID=ou_xxxxxxxxxxxxxxxx
+KIMI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+> 📖 **配置详细说明**见 [CONFIG.md](docs/CONFIG.md)
+
+### 5. 启动服务
+
+```bash
+# 方式1：直接启动
 python server/main.py
+
+# 方式2：使用启动脚本
+cd server && ./start.sh
+
+# 方式3：使用 uvicorn
+uvicorn server.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+服务启动后，访问 http://localhost:8000/docs 查看 API 文档。
+
+---
+
+## 📁 项目结构
+
+```
+cognimate/
+├── server/                    # 后端服务
+│   ├── main.py               # FastAPI 主服务入口
+│   ├── feishu_messenger.py   # 飞书消息推送
+│   ├── checkin_tracker.py    # 打卡系统
+│   ├── goal_tracker.py       # 目标管理
+│   ├── decision_helper.py    # 决策辅助
+│   └── ...
+├── smart_schedule/           # 智能日程模块
+│   ├── api/                  # API 接口
+│   ├── core/                 # 核心逻辑
+│   └── database/             # 数据库
+├── cognimate-agent-skill/    # Agent 技能扩展
+├── docs/                     # 文档
+├── .env.example              # 环境变量模板
+├── config.example.json       # JSON 配置模板
+├── requirements.txt          # 依赖列表
+└── README.md                 # 本文件
 ```
 
 ---
 
-## 🏗️ 项目结构
+## ⚙️ 配置说明
+
+### 飞书机器人配置
+
+1. 访问 [飞书开放平台](https://open.feishu.cn/app)
+2. 创建「企业自建应用」
+3. 获取 `App ID` 和 `App Secret`
+4. 配置权限：
+   - `im:chat:readonly`
+   - `im:message:send`
+   - `im:message.group_msg`
+5. 发布应用并获取用户授权
+
+### AI 服务配置
+
+支持多种 AI 服务：
+
+**Kimi（推荐）：**
+```env
+KIMI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+**OpenAI 兼容：**
+```env
+AI_PROVIDER=openai
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+OPENAI_BASE_URL=https://api.openai.com/v1
+```
+
+---
+
+## 🎯 功能使用
+
+### 设置提醒
+
+通过飞书向 CogniMate 发送消息：
 
 ```
-cognimate/
-├── server/                 # 后端服务
-│   ├── main.py            # FastAPI 主服务
-│   ├── feishu_messenger.py # 飞书消息推送
-│   ├── checkin_tracker.py  # 打卡系统
-│   ├── goal_tracker.py     # 目标管理
-│   └── ...
-├── cognimate-agent-skill/ # Agent 技能
-├── smart_schedule/        # 智能日程
-├── memory/                # 记忆存储
-├── skills/                # 技能扩展
-├── requirements.txt       # 依赖列表
-└── README.md             # 本文件
+设置每天早上8点提醒我吃早饭
 ```
+
+### 打卡
+
+收到提醒后回复：
+
+```
+吃了
+```
+
+或
+
+```
+打卡完成
+```
+
+### 设定目标
+
+```
+我想减肥，目标3个月减10斤
+```
+
+CogniMate 会帮你制定计划并跟踪进度。
 
 ---
 
 ## 📚 文档
 
-- [项目说明书](docs/PROJECT.md) - 详细介绍项目背景、技术架构
 - [安装指南](docs/INSTALL.md) - 详细安装步骤
-- [配置说明](docs/CONFIG.md) - 配置飞书机器人
+- [配置说明](docs/CONFIG.md) - 完整配置选项
 - [API 文档](docs/API.md) - 接口文档
+- [开发指南](docs/DEVELOPMENT.md) - 二次开发说明
+- [部署指南](docs/DEPLOY.md) - 生产环境部署
+
+---
+
+## 🏗️ 技术栈
+
+- **后端**：FastAPI + Uvicorn
+- **数据库**：SQLite
+- **AI**：Kimi / OpenAI 兼容 API
+- **消息**：飞书开放平台
+- **任务调度**：APScheduler / Cron
 
 ---
 
@@ -117,7 +226,7 @@ cognimate/
 
 ## 🙏 致谢
 
-- [Kimi AI](https://kimi.moonshot.cn/) - 提供 AI 能力支持
+- [Kimi AI](https://kimi.moonshot.cn/) - AI 能力支持
 - [FastAPI](https://fastapi.tiangolo.com/) - Web 框架
 - [Feishu Open Platform](https://open.feishu.cn/) - 飞书开放平台
 

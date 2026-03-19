@@ -1,0 +1,57 @@
+# CogniMate 智伴 - JSON 配置模板
+# 使用说明：
+# 1. 复制此文件为 config.json
+# 2. 填入你的实际配置值
+# 3. 确保 config.json 在 .gitignore 中，不要提交到仓库
+
+{
+  "user": {
+    "name": "你的昵称",
+    "user_id": "你的飞书用户ID",
+    "timezone": "Asia/Shanghai"
+  },
+  "feishu": {
+    "app_id": "cli_xxxxxxxxxxxxxxxx",
+    "app_secret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "encrypt_key": "",
+    "verification_token": ""
+  },
+  "ai": {
+    "provider": "kimi",
+    "api_key": "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "base_url": "https://api.moonshot.cn/v1",
+    "model": "kimi-coding/k2p5"
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "port": 8000,
+    "debug": false
+  },
+  "reminders": {
+    "water": {
+      "enabled": true,
+      "times": ["09:30", "11:00", "14:00", "16:00", "20:00"],
+      "cup_size_ml": 300
+    },
+    "work": {
+      "enabled": true,
+      "time": "07:50",
+      "workdays_only": true
+    },
+    "exercise": {
+      "enabled": true,
+      "time": "19:00",
+      "duration_minutes": 30
+    },
+    "sleep": {
+      "enabled": true,
+      "time": "22:30"
+    }
+  },
+  "features": {
+    "checkin": true,
+    "goal_tracking": true,
+    "emotion_support": true,
+    "smart_schedule": true
+  }
+}
